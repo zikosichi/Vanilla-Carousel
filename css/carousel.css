@@ -1,5 +1,86 @@
 .carousel {
-  display: block;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: flex; }
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1); }
+  .carousel .carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden; }
+  .carousel:hover .carousel__nav button {
+    opacity: 0.2; }
+
+.carousel__nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 40px;
+  transform: translateY(-50%); }
+  .carousel__nav button {
+    border: none;
+    background-color: transparent;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.3s; }
+    .carousel__nav button:hover {
+      opacity: 0.8; }
+    .carousel__nav button img {
+      height: 100%;
+      width: 100%; }
+    .carousel__nav button.carousel__nav--left {
+      left: -50px;
+      transform: rotate(180deg); }
+    .carousel__nav button.carousel__nav--right {
+      right: -50px; }
+
+.carousel-item {
+  display: flex;
+  position: relative;
+  z-index: 2; }
+  .carousel-item .carousel-item__thumb {
+    min-width: 0;
+    min-width: 300px;
+    padding: 30px; }
+    .carousel-item .carousel-item__thumb img {
+      width: 100%; }
+  .carousel-item .carousel-item__body {
+    padding: 30px;
+    padding-left: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; }
+  .carousel-item .carousel-item__header {
+    display: flex;
+    align-items: baseline; }
+    .carousel-item .carousel-item__header h1 {
+      margin: 0;
+      font-size: 26px; }
+    .carousel-item .carousel-item__header p {
+      margin: 0;
+      color: #BFBFBF;
+      margin-left: 30px;
+      font-size: 16px; }
+      .carousel-item .carousel-item__header p span {
+        text-transform: uppercase;
+        display: inline-block;
+        margin-right: 20px; }
+  .carousel-item .carousel-item__content {
+    margin-top: 15px;
+    color: #95989A;
+    flex-grow: 1; }
+    .carousel-item .carousel-item__content p {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical; }
+  .carousel-item .carousel-item__footer span {
+    display: inline-block;
+    margin-right: 20px;
+    color: #BFBFBF;
+    font-size: 16px; }
+    .carousel-item .carousel-item__footer span b {
+      color: #55A6DC;
+      font-size: 28px;
+      font-weight: normal; }

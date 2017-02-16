@@ -1,13 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+
 body{
     margin: 0;
     padding: 0;
     background-color: #EBEBEB;
+    color: #2D383F;
+    font-family: 'Open Sans', sans-serif;
+
 }
 
-.container{
-    
+// GLOBAL ELEMENTS
+.placeholer{
+    background-color: #DFDFDF;
+    border-radius: 4px;
+    display: block;
+    margin: 10px;
+}
+
+.placeholer.text{
+    height: 20px;
+    width: 60px;
+}
+
+.placeholer.image{
+    height: 300px;
+    width: 270px;
 }
 
 .wrapper{
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+// PAGE ELEMENTS
+
+// TOP NAVIGATION
+nav{
+    background-color: #fff;
+    .wrapper{
+        height: 60px;
+        display: flex;
+        align-items: center;
+        .logo{
+            height: 30px;
+        }
+        .menu{
+            padding-left: 40px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+        .settings{
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+    }    
+}
+
+// SUB NAVIGATION
+nav.sub{
+    background-color: #2D383F;
+    height: 60px;
+}
+
+// SLIDER CONTAINER
+.carousel-wrapper{
+    margin: 50px 0;
+}
+
+// BROKERS GRID
+.brokers{
+    .brokers__header{
+        display: flex;
+        align-items: center;
+        h3{
+            flex-grow: 1;
+        }
+    }
+
+    .brokers__grid{
+        margin: 0 -10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 }

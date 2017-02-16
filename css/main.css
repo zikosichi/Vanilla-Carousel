@@ -1,7 +1,63 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 body {
   margin: 0;
   padding: 0;
-  background-color: #EBEBEB; }
+  background-color: #EBEBEB;
+  color: #2D383F;
+  font-family: 'Open Sans', sans-serif; }
+
+.placeholer {
+  background-color: #DFDFDF;
+  border-radius: 4px;
+  display: block;
+  margin: 10px; }
+
+.placeholer.text {
+  height: 20px;
+  width: 60px; }
+
+.placeholer.image {
+  height: 300px;
+  width: 270px; }
 
 .wrapper {
-  width: 1200px; }
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; }
+
+nav {
+  background-color: #fff; }
+  nav .wrapper {
+    height: 60px;
+    display: flex;
+    align-items: center; }
+    nav .wrapper .logo {
+      height: 30px; }
+    nav .wrapper .menu {
+      padding-left: 40px;
+      flex-grow: 1;
+      display: flex;
+      align-items: center; }
+    nav .wrapper .settings {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center; }
+
+nav.sub {
+  background-color: #2D383F;
+  height: 60px; }
+
+.carousel-wrapper {
+  margin: 50px 0; }
+
+.brokers .brokers__header {
+  display: flex;
+  align-items: center; }
+  .brokers .brokers__header h3 {
+    flex-grow: 1; }
+
+.brokers .brokers__grid {
+  margin: 0 -10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
