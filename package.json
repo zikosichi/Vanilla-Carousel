@@ -1,0 +1,23 @@
+{
+  "name": "vanilla-carousel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scss": "node-sass -w scss/ -o css/",
+    "buildcss": "npm run scss && npm run autoprefixer",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "autoprefixer": "postcss -u autoprefixer -r css/*",
+    "server": "live-server",
+    "serve": "concurrently --kill-others \"npm run server\" \"npm run buildcss\""
+  },
+  "author": "Zviad Sichinava",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.7.3",
+    "browser-sync": "^2.18.8",
+    "concurrently": "^3.3.0",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.6.0"
+  }
+}
