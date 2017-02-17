@@ -26,6 +26,7 @@ body {
   margin: 0 auto; }
 
 nav {
+  overflow: hidden;
   background-color: #fff; }
   nav .wrapper {
     height: 60px;
@@ -42,6 +43,11 @@ nav {
       flex-shrink: 0;
       display: flex;
       align-items: center; }
+  @media screen and (max-width: 590px) {
+    nav .wrapper {
+      padding: 0 15px; }
+      nav .wrapper .settings, nav .wrapper .menu {
+        display: none; } }
 
 nav.sub {
   background-color: #2D383F;
@@ -61,3 +67,10 @@ nav.sub {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between; }
+
+@media screen and (max-width: 590px) {
+  .brokers {
+    padding: 0 15px; }
+    .brokers .brokers__grid .placeholer {
+      width: 40%;
+      height: 100px; } }

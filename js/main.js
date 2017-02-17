@@ -27,8 +27,12 @@ function Carousel(el) {
                 </button>
             </div>
         </div>`;
-
 }
+
+
+
+
+
 
 
 // INIT FUNCTION
@@ -50,6 +54,11 @@ Carousel.prototype.init = function () {
     this.navRightCtrl.addEventListener('click', function() { self.navigate('right'); });
     this.navLeftCtrl.addEventListener('click', function() { self.navigate('left');  });
 };
+
+
+
+
+
 
 
 // CREATE CAROUSEL ITEMS
@@ -97,6 +106,11 @@ Carousel.prototype.createItemElements = function(brokers){
     }, this);
 }
 
+
+
+
+
+
 // ADDING NEW ITEM TO CAROUSEL
 Carousel.prototype.addCarouselItem = function(el){
     // Push item to items array
@@ -104,6 +118,10 @@ Carousel.prototype.addCarouselItem = function(el){
     // Append item HTML to innder-html div
     this.carouselInnerEl.appendChild(el);
 }
+
+
+
+
 
 
 // SLIDING CAROUSEL ITEMS
@@ -126,11 +144,7 @@ Carousel.prototype.navigate = function(dir){
         itemNextAnimation = dir == "right" ? "slide-from-right" : "slide-from-left";
 
 
-
-
-
     // *** CURRENT ITEM ANIMATION *** //
-
     // Start animating current element (Slide out)
     itemCurrent.classList.add(itemCurrentAnimation);
 
@@ -148,7 +162,6 @@ Carousel.prototype.navigate = function(dir){
 
 
     // *** NEXT ITEM ANIMATION *** //
-
     // Start animating next element (Slide In)
     itemNext.classList.add("active");
     itemNext.classList.add(itemNextAnimation);
@@ -165,6 +178,12 @@ Carousel.prototype.navigate = function(dir){
 
     // console.log(dir);
 }
+
+
+
+
+
+
 
 
 

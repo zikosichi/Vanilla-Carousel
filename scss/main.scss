@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+@import "variables";
 
 body{
     margin: 0;
@@ -39,6 +40,7 @@ body{
 
 // TOP NAVIGATION
 nav{
+    overflow: hidden;
     background-color: #fff;
     .wrapper{
         height: 60px;
@@ -58,7 +60,15 @@ nav{
             display: flex;
             align-items: center;
         }
-    }    
+    }   
+    @media screen and (max-width: $break-sm) {
+        .wrapper{
+            padding: 0 15px;
+            .settings, .menu{
+                display: none;
+            }
+        }
+    }
 }
 
 // SUB NAVIGATION
@@ -87,5 +97,12 @@ nav.sub{
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+    }
+    @media screen and (max-width: $break-sm) {
+        padding: 0 15px;            
+        .brokers__grid .placeholer{
+            width: 40%;
+            height: 100px;
+        }
     }
 }
