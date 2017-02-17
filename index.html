@@ -67,7 +67,18 @@
 
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/carousel.js"></script>
+    <script>
+    
+        // USING THE COMPONENT
+        var carouselElement = document.getElementById("carousel");
+        var car = new Carousel(carouselElement, {
+            showBullets: true,            
+            autoSlide: true,
+            autoSlideInterval: 3000
+        });
+
+    </script>
 
 
 </body>

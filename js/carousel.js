@@ -1,6 +1,6 @@
 'use strict';
 
-function Carousel(el) {
+function Carousel(el, options) {
 
     this.el = el;
 
@@ -15,7 +15,16 @@ function Carousel(el) {
     this.currentItemIndex = 0;
     this.itemsTotal       = 0;
     this.timer            = null;
-    this.timerInterval    = 3000;
+
+    this.options = {
+        autoSlide: true,
+        slideInterval: 4000,
+        showBullets: true
+    }
+
+    this.options = Object.assign(this.options, options);
+
+    console.log(this.options);
 
     // Carousel layout HTML
     this.carouselHTML = `
@@ -32,6 +41,8 @@ function Carousel(el) {
             </div>
             <div class="carousel__bullet-nav"></div>
         </div>`;
+
+    this.init();
 }
 
 
@@ -60,8 +71,10 @@ Carousel.prototype.init = function () {
     this.navRightCtrl.addEventListener('click', function() { self.navigateToRight(); });
     this.navLeftCtrl.addEventListener('click', function() { self.navigateToLeft();  });
 
-    // Start Timer
-    this._startTimer();
+    // Start Timer if enabled
+    if (this.options.autoSlide){
+        this._startTimer();
+    }
 };
 
 
@@ -114,17 +127,19 @@ Carousel.prototype.createItemElements = function(brokers){
 
         this.addCarouselItem(item);
 
-        // Create bullet navigation
-        var bulletItem = document.createElement("span");
-        this.bulletNavEl.appendChild(bulletItem);
-        if (this.currentItemIndex == index){
-            bulletItem.classList.add("active");
-        }
-        bulletItem.addEventListener("click", function(){
-            self.navigateToIndex(index);
-        });
+        // Create bullet navigation if enabled
+        if (this.options.showBullets) {
+            var bulletItem = document.createElement("span");
+            this.bulletNavEl.appendChild(bulletItem);
+            if (this.currentItemIndex == index){
+                bulletItem.classList.add("active");
+            }
+            bulletItem.addEventListener("click", function(){
+                self.navigateToIndex(index);
+            });
 
-        this.bulletItems.push(bulletItem);
+            this.bulletItems.push(bulletItem);            
+        }
 
 
 
@@ -176,7 +191,9 @@ Carousel.prototype.navigateToIndex = function(index){
         itemCurrentAnimation = dir == "right" ? "slide-to-left" : "slide-to-right";
 
     // Remove active class from current bullet
-    this.bulletItems[this.currentItemIndex].classList.remove("active");
+    if (this.bulletItems[this.currentItemIndex]) {
+        this.bulletItems[this.currentItemIndex].classList.remove("active");        
+    }
 
     // Update new current index value
     this.currentItemIndex = index;
@@ -186,7 +203,9 @@ Carousel.prototype.navigateToIndex = function(index){
         itemNextAnimation = dir == "right" ? "slide-from-right" : "slide-from-left";
 
     // Add active class to new bullet
-    this.bulletItems[this.currentItemIndex].classList.add("active");
+    if (this.bulletItems[this.currentItemIndex]) {
+        this.bulletItems[this.currentItemIndex].classList.add("active");
+    }
 
 
     // *** CURRENT ITEM ANIMATION *** //
@@ -222,7 +241,9 @@ Carousel.prototype.navigateToIndex = function(index){
 
 
     // Reset timer. So, After selecting slide it will stop for 3000 ms
-    this._resetTimer();
+    if (this.options.autoSlide){
+        this._resetTimer();
+    }
 }
 
 
@@ -255,7 +276,7 @@ Carousel.prototype._startTimer = function () {
     var self = this;
     this.timer = setInterval(function(){
         self.navigateToRight();
-    }, self.timerInterval);
+    }, self.options.slideInterval);
 }
 
 
@@ -263,21 +284,3 @@ Carousel.prototype._resetTimer = function () {
     clearInterval(this.timer);
     this._startTimer();
 }
-
-
-
-
-
-
-
-// USING THE COMPONENT
-var carouselElement = document.getElementById("carousel");
-var car = new Carousel(carouselElement);
-car.init();
-
-
-
-
-
-
-
