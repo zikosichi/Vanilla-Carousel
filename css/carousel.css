@@ -49,6 +49,28 @@
     .carousel__nav button.carousel__nav--right {
       right: 20px; } }
 
+.carousel__bullet-nav {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer; }
+  .carousel__bullet-nav span {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1); }
+    .carousel__bullet-nav span:hover, .carousel__bullet-nav span.active {
+      background-color: rgba(0, 0, 0, 0.3); }
+  @media screen and (max-width: 980px) {
+    .carousel__bullet-nav span {
+      width: 5px;
+      height: 5px; } }
+
 .carousel-item {
   position: relative;
   z-index: 2;

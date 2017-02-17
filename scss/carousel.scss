@@ -71,6 +71,33 @@
     }
 }
 
+.carousel__bullet-nav{
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    span{
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background-color: rgba(#000, 0.1);
+        &:hover, &.active{
+            background-color: rgba(#000, 0.3);
+        }
+    }
+    @media screen and (max-width: $break-md) {
+        span{
+            width: 5px;
+            height: 5px;
+        }
+    }
+}
+
 .carousel-item{
     position: relative;
     z-index: 2;

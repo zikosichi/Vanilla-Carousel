@@ -8,10 +8,14 @@ function Carousel(el) {
     this.carouselInnerEl  = null;
     this.navRightCtrl     = null;
     this.navLefttCtrl     = null;
+    this.bulletNavEl      = null;
     this.items            = [];
+    this.bulletItems      = [];
     this.initialItemIndex = 0;
     this.currentItemIndex = 0;
     this.itemsTotal       = 0;
+    this.timer            = null;
+    this.timerInterval    = 3000;
 
     // Carousel layout HTML
     this.carouselHTML = `
@@ -26,6 +30,7 @@ function Carousel(el) {
                     <img src="images/arrow-right.svg">
                 </button>
             </div>
+            <div class="carousel__bullet-nav"></div>
         </div>`;
 }
 
@@ -39,11 +44,12 @@ function Carousel(el) {
 Carousel.prototype.init = function () {
     var self = this;
     // Initializing carousel elements
-    this.el.innerHTML    = this.carouselHTML;
-    this.carouselEl      = this.el.querySelector(".carousel");
-    this.carouselInnerEl = this.el.querySelector(".carousel-inner");
-    this.navRightCtrl    = this.el.querySelector(".carousel__nav--right");
-    this.navLeftCtrl     = this.el.querySelector(".carousel__nav--left");
+    this.el.innerHTML     = this.carouselHTML;
+    this.carouselEl       = this.el.querySelector(".carousel");
+    this.carouselInnerEl  = this.el.querySelector(".carousel-inner");
+    this.navRightCtrl     = this.el.querySelector(".carousel__nav--right");
+    this.navLeftCtrl      = this.el.querySelector(".carousel__nav--left");
+    this.bulletNavEl = this.el.querySelector(".carousel__bullet-nav");
 
     // Getting data from brokers.json
     this._getBrokersData(function(data){
@@ -51,8 +57,11 @@ Carousel.prototype.init = function () {
     });
 
     // Seting the listeners for navigation
-    this.navRightCtrl.addEventListener('click', function() { self.navigate('right'); });
-    this.navLeftCtrl.addEventListener('click', function() { self.navigate('left');  });
+    this.navRightCtrl.addEventListener('click', function() { self.navigateToRight(); });
+    this.navLeftCtrl.addEventListener('click', function() { self.navigateToLeft();  });
+
+    // Start Timer
+    this._startTimer();
 };
 
 
@@ -63,6 +72,8 @@ Carousel.prototype.init = function () {
 
 // CREATE CAROUSEL ITEMS
 Carousel.prototype.createItemElements = function(brokers){
+
+    var self = this;
 
     // Update total items count
     this.itemsTotal = brokers.length;
@@ -103,6 +114,20 @@ Carousel.prototype.createItemElements = function(brokers){
 
         this.addCarouselItem(item);
 
+        // Create bullet navigation
+        var bulletItem = document.createElement("span");
+        this.bulletNavEl.appendChild(bulletItem);
+        if (this.currentItemIndex == index){
+            bulletItem.classList.add("active");
+        }
+        bulletItem.addEventListener("click", function(){
+            self.navigateToIndex(index);
+        });
+
+        this.bulletItems.push(bulletItem);
+
+
+
     }, this);
 }
 
@@ -124,24 +149,44 @@ Carousel.prototype.addCarouselItem = function(el){
 
 
 
-// SLIDING CAROUSEL ITEMS
-Carousel.prototype.navigate = function(dir){
+
+
+
+// SLIDING CAROUSEL ITEM TO THE RIGHT
+Carousel.prototype.navigateToRight = function(){
+    var newIndex = this.currentItemIndex < this.itemsTotal-1 ? this.currentItemIndex + 1 : 0;
+    this.navigateToIndex(newIndex);
+}
+
+// SLIDING CAROUSEL ITEM TO THE LEFT
+Carousel.prototype.navigateToLeft = function(){
+    var newIndex = this.currentItemIndex > 0 ? this.currentItemIndex - 1 : this.itemsTotal - 1;
+    this.navigateToIndex(newIndex);
+}
+
+
+// SLIDING CAROUSEL ITEMS TO THE INDEX
+Carousel.prototype.navigateToIndex = function(index){
+
+
+    var dir = this.currentItemIndex < index ? "right" : "left";
 
     // Curent item element & animation class
     var itemCurrent = this.items[this.currentItemIndex],
         itemCurrentAnimation = dir == "right" ? "slide-to-left" : "slide-to-right";
 
+    // Remove active class from current bullet
+    this.bulletItems[this.currentItemIndex].classList.remove("active");
+
     // Update new current index value
-    if( dir === "right" ) {
-        this.currentItemIndex = this.currentItemIndex < this.itemsTotal-1 ? this.currentItemIndex + 1 : 0;
-    }
-    else {
-        this.currentItemIndex = this.currentItemIndex > 0 ? this.currentItemIndex - 1 : this.itemsTotal - 1;
-    }
+    this.currentItemIndex = index;
 
     // Next item elment (to come in) & animation class
     var itemNext = this.items[this.currentItemIndex],
         itemNextAnimation = dir == "right" ? "slide-from-right" : "slide-from-left";
+
+    // Add active class to new bullet
+    this.bulletItems[this.currentItemIndex].classList.add("active");
 
 
     // *** CURRENT ITEM ANIMATION *** //
@@ -176,7 +221,8 @@ Carousel.prototype.navigate = function(dir){
     itemNext.addEventListener("animationend", itemNextAnimationEnd, false);
 
 
-    // console.log(dir);
+    // Reset timer. So, After selecting slide it will stop for 3000 ms
+    this._resetTimer();
 }
 
 
@@ -204,6 +250,22 @@ Carousel.prototype._getBrokersData = function (callback) {
 
 
 
+// PRIVATE FUNCTION FOR TIMER
+Carousel.prototype._startTimer = function () {
+    var self = this;
+    this.timer = setInterval(function(){
+        self.navigateToRight();
+    }, self.timerInterval);
+}
+
+
+Carousel.prototype._resetTimer = function () {
+    clearInterval(this.timer);
+    this._startTimer();
+}
+
+
+
 
 
 
@@ -219,31 +281,3 @@ car.init();
 
 
 
-
-
-
-
-
-
-// var anim = document.getElementById("test");
-// var anim2 = document.getElementById("test2");
-// anim.addEventListener("animationend", AnimationListener, false);
-
-
-
-// function AnimationListener(e){
-
-//     if (e.animationName == "slideToLeft") {
-//         anim.parentNode.removeChild(anim);
-//     }
-//     console.log("animation finished", e.animationName);
-// }
-
-// var left = document.getElementById("left");
-
-// left.addEventListener("click", function(e){
-//     e.preventDefault();
-//     anim.classList.add("slide-to-left");
-//     anim2.style.display = "flex";
-//     console.log("asd");
-// });
