@@ -54,6 +54,7 @@
     position: relative;
     z-index: 2;
     display: none;
+    animation-iteration-count: 1;
     &.active{
         display: flex;
     }
@@ -123,26 +124,63 @@
     }
 }
 
-.slide-form-right{
-    animation: slideFromRight 1s infinite cubic-bezier(0.23, 1, 0.32, 1);
-    animation-iteration-count: 1;
+// The sequence is very important
+// We need to declare Slide In animations first
+// And then slide out
+.slide-from-right{
+    animation: slideFromRight 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.slide-from-left{
+    animation: slideFromLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.slide-to-right{
+    position: absolute;
+    top: 0;
+    animation: slideToRight 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .slide-to-left{
     position: absolute;
-    animation: slideToLeft 1s infinite cubic-bezier(0.23, 1, 0.32, 1);
-    animation-iteration-count: 1;
+    top: 0;
+    animation: slideToLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+
+$scaleFactory: 0.8;
 
 
 @keyframes slideFromRight {	
 	0%{
 		opacity: 0;
-		transform: scale(0.5) translateX(100%);
+		transform: scale($scaleFactory) translateX(100%);
 	}	
 	100% {
 		opacity: 1;		
+		transform: scale(1) translateX(0%);
+	}
+}
+
+
+@keyframes slideToRight {	
+	0%{
+		opacity: 1;
+		transform: scale(1) translateX(0%);
+	}	
+	100% {
+		opacity: 0;		
+		transform: scale($scaleFactory) translateX(100%);
+	}
+}
+
+@keyframes slideFromLeft {	
+	0%{
+		opacity: 0;
+		transform: scale($scaleFactory) translateX(-100%);
+	}	
+	100% {
+		opacity: 1;
 		transform: scale(1) translateX(0%);
 	}
 }
@@ -154,6 +192,6 @@
 	}	
 	100% {
 		opacity: 0;		
-		transform: scale(0.5) translateX(-100%);
+		transform: scale($scaleFactory) translateX(-100%);
 	}
 }
