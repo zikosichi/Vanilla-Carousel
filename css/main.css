@@ -33,34 +33,19 @@ nav {
   background-color: #fff; }
   nav .wrapper {
     height: 60px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center; }
+    align-items: center; }
     nav .wrapper .logo {
       height: 30px; }
     nav .wrapper .menu {
       padding-left: 40px;
-      -webkit-box-flex: 1;
-          -ms-flex-positive: 1;
-              flex-grow: 1;
-      display: -webkit-box;
-      display: -ms-flexbox;
+      flex-grow: 1;
       display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center; }
+      align-items: center; }
     nav .wrapper .settings {
-      -ms-flex-negative: 0;
-          flex-shrink: 0;
-      display: -webkit-box;
-      display: -ms-flexbox;
+      flex-shrink: 0;
       display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center; }
+      align-items: center; }
   @media screen and (max-width: 590px) {
     nav .wrapper {
       padding: 0 15px; }
@@ -75,27 +60,16 @@ nav.sub {
   margin: 50px 0; }
 
 .brokers .brokers__header {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center; }
+  align-items: center; }
   .brokers .brokers__header h3 {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1; }
+    flex-grow: 1; }
 
 .brokers .brokers__grid {
   margin: 0 -10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between; }
+  flex-wrap: wrap;
+  justify-content: space-between; }
 
 @media screen and (max-width: 590px) {
   .brokers {

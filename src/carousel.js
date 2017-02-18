@@ -4,17 +4,17 @@ function Carousel(el, options) {
 
     this.el = el;
 
-    this.carouselEl       = null;
-    this.carouselInnerEl  = null;
-    this.navRightCtrl     = null;
-    this.navLefttCtrl     = null;
-    this.bulletNavEl      = null;
-    this.items            = [];
-    this.bulletItems      = [];
+    this.carouselEl = null;
+    this.carouselInnerEl = null;
+    this.navRightCtrl = null;
+    this.navLefttCtrl = null;
+    this.bulletNavEl = null;
+    this.items = [];
+    this.bulletItems = [];
     this.initialItemIndex = 0;
     this.currentItemIndex = 0;
-    this.itemsTotal       = 0;
-    this.timer            = null;
+    this.itemsTotal = 0;
+    this.timer = null;
 
     this.options = {
         autoSlide: true,
@@ -22,9 +22,12 @@ function Carousel(el, options) {
         showBullets: true
     }
 
-    this.options = Object.assign(this.options, options);
 
-    console.log(this.options);
+    // Extend options Object
+    extend(this.options, options);
+
+    // TODO: popifyl needs to be added to Babel to compile es6 "assign"
+    // this.options = Object.assign(this.options, options);
 
     // Carousel layout HTML
     this.carouselHTML = `
@@ -55,24 +58,24 @@ function Carousel(el, options) {
 Carousel.prototype.init = function () {
     var self = this;
     // Initializing carousel elements
-    this.el.innerHTML     = this.carouselHTML;
-    this.carouselEl       = this.el.querySelector(".carousel");
-    this.carouselInnerEl  = this.el.querySelector(".carousel-inner");
-    this.navRightCtrl     = this.el.querySelector(".carousel__nav--right");
-    this.navLeftCtrl      = this.el.querySelector(".carousel__nav--left");
+    this.el.innerHTML = this.carouselHTML;
+    this.carouselEl = this.el.querySelector(".carousel");
+    this.carouselInnerEl = this.el.querySelector(".carousel-inner");
+    this.navRightCtrl = this.el.querySelector(".carousel__nav--right");
+    this.navLeftCtrl = this.el.querySelector(".carousel__nav--left");
     this.bulletNavEl = this.el.querySelector(".carousel__bullet-nav");
 
     // Getting data from brokers.json
-    this._getBrokersData(function(data){
+    this._getBrokersData(function (data) {
         self.createItemElements(data.data);
     });
 
     // Seting the listeners for navigation
-    this.navRightCtrl.addEventListener('click', function() { self.navigateToRight(); });
-    this.navLeftCtrl.addEventListener('click', function() { self.navigateToLeft();  });
+    this.navRightCtrl.addEventListener('click', function () { self.navigateToRight(); });
+    this.navLeftCtrl.addEventListener('click', function () { self.navigateToLeft(); });
 
     // Start Timer if enabled
-    if (this.options.autoSlide){
+    if (this.options.autoSlide) {
         this._startTimer();
     }
 };
@@ -84,26 +87,26 @@ Carousel.prototype.init = function () {
 
 
 // CREATE CAROUSEL ITEMS
-Carousel.prototype.createItemElements = function(brokers){
+Carousel.prototype.createItemElements = function (brokers) {
 
     var self = this;
 
     // Update total items count
     this.itemsTotal = brokers.length;
 
-    brokers.forEach(function(broker, index) {
+    brokers.forEach(function (broker, index) {
 
         // Create carousel item element
         var item = document.createElement("div");
         item.classList.add("carousel-item");
-        if (this.currentItemIndex == index){
+        if (this.currentItemIndex == index) {
             item.classList.add("active");
         }
 
         // HTML structure of carousel item
         item.innerHTML = `
             <div class="carousel-item__thumb">
-                <img src=" ${broker.links.logo2x} " alt="">
+                <img src=" ${broker.links.logo2x} " alt="${broker.name} Logo">
             </div>
 
             <div class="carousel-item__body">
@@ -131,14 +134,14 @@ Carousel.prototype.createItemElements = function(brokers){
         if (this.options.showBullets) {
             var bulletItem = document.createElement("span");
             this.bulletNavEl.appendChild(bulletItem);
-            if (this.currentItemIndex == index){
+            if (this.currentItemIndex == index) {
                 bulletItem.classList.add("active");
             }
-            bulletItem.addEventListener("click", function(){
+            bulletItem.addEventListener("click", function () {
                 self.navigateToIndex(index);
             });
 
-            this.bulletItems.push(bulletItem);            
+            this.bulletItems.push(bulletItem);
         }
 
 
@@ -152,7 +155,7 @@ Carousel.prototype.createItemElements = function(brokers){
 
 
 // ADDING NEW ITEM TO CAROUSEL
-Carousel.prototype.addCarouselItem = function(el){
+Carousel.prototype.addCarouselItem = function (el) {
     // Push item to items array
     this.items.push(el);
     // Append item HTML to innder-html div
@@ -168,20 +171,20 @@ Carousel.prototype.addCarouselItem = function(el){
 
 
 // SLIDING CAROUSEL ITEM TO THE RIGHT
-Carousel.prototype.navigateToRight = function(){
-    var newIndex = this.currentItemIndex < this.itemsTotal-1 ? this.currentItemIndex + 1 : 0;
+Carousel.prototype.navigateToRight = function () {
+    var newIndex = this.currentItemIndex < this.itemsTotal - 1 ? this.currentItemIndex + 1 : 0;
     this.navigateToIndex(newIndex);
 }
 
 // SLIDING CAROUSEL ITEM TO THE LEFT
-Carousel.prototype.navigateToLeft = function(){
+Carousel.prototype.navigateToLeft = function () {
     var newIndex = this.currentItemIndex > 0 ? this.currentItemIndex - 1 : this.itemsTotal - 1;
     this.navigateToIndex(newIndex);
 }
 
 
 // SLIDING CAROUSEL ITEMS TO THE INDEX
-Carousel.prototype.navigateToIndex = function(index){
+Carousel.prototype.navigateToIndex = function (index) {
 
     // If we click activated bullet -> do nothing
     if (this.currentItemIndex == index) return;
@@ -194,7 +197,7 @@ Carousel.prototype.navigateToIndex = function(index){
 
     // Remove active class from current bullet
     if (this.bulletItems[this.currentItemIndex]) {
-        this.bulletItems[this.currentItemIndex].classList.remove("active");        
+        this.bulletItems[this.currentItemIndex].classList.remove("active");
     }
 
     // Update new current index value
@@ -213,8 +216,9 @@ Carousel.prototype.navigateToIndex = function(index){
     // *** CURRENT ITEM ANIMATION *** //
     // Start animating current element (Slide out)
     itemCurrent.classList.add(itemCurrentAnimation);
+    console.log(itemCurrent.classList.contains("active"));
 
-    var itemCurrentAnimationEnd = function(){
+    var itemCurrentAnimationEnd = function () {
         // Once animation is done we remove active class and animation class from the item
         itemCurrent.classList.remove("active");
         itemCurrent.classList.remove(itemCurrentAnimation);
@@ -229,11 +233,13 @@ Carousel.prototype.navigateToIndex = function(index){
 
     // *** NEXT ITEM ANIMATION *** //
     // Start animating next element (Slide In)
-    itemNext.classList.add("active");
+    itemNext.className = "carousel-item active";
     itemNext.classList.add(itemNextAnimation);
 
-    var itemNextAnimationEnd = function(){
+    var itemNextAnimationEnd = function () {
         itemNext.classList.remove(itemNextAnimation);
+        // Reseting classes after transition is finished
+        itemNext.className = "carousel-item active";
         // Remove the listener for animationend
         itemNext.removeEventListener("animationend", itemNextAnimationEnd, false);
     }
@@ -243,7 +249,7 @@ Carousel.prototype.navigateToIndex = function(index){
 
 
     // Reset timer. So, After selecting slide it will stop for 3000 ms
-    if (this.options.autoSlide){
+    if (this.options.autoSlide) {
         this._resetTimer();
     }
 }
@@ -276,7 +282,7 @@ Carousel.prototype._getBrokersData = function (callback) {
 // PRIVATE FUNCTION FOR TIMER
 Carousel.prototype._startTimer = function () {
     var self = this;
-    this.timer = setInterval(function(){
+    this.timer = setInterval(function () {
         self.navigateToRight();
     }, self.options.slideInterval);
 }
@@ -288,10 +294,29 @@ Carousel.prototype._resetTimer = function () {
 }
 
 
+// HELPER CLASS TO MERGE OBJECTS
+var extend = function (out) {
+    out = out || {};
+    for (var i = 1; i < arguments.length; i++) {
+        if (!arguments[i])
+            continue;
+
+        for (var key in arguments[i]) {
+            if (arguments[i].hasOwnProperty(key))
+                out[key] = arguments[i][key];
+        }
+    }
+    return out;
+};
+
+
+
+window.Carousel = Carousel;
+
 // USING THE COMPONENT
-        var carouselElement = document.getElementById("carousel");
-        var car = new Carousel(carouselElement, {
-            showBullets: true,            
-            autoSlide: true,
-            autoSlideInterval: 3000
-        });
+var carouselElement = document.getElementById("carousel");
+var car = new Carousel(carouselElement, {
+    showBullets: true,
+    autoSlide: true,
+    autoSlideInterval: 3000
+});

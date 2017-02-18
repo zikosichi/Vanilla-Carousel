@@ -102,7 +102,11 @@
     position: relative;
     z-index: 2;
     display: none;
+    // Animation parameters
     animation-iteration-count: 1;
+    animation-duration: $animation-duration;
+    animation-timing-function: $animation-type;
+
     &.active{
         display: flex;
     }
@@ -210,30 +214,29 @@
 // The sequence is very important
 // We need to declare Slide In animations first
 // And then slide out
+
 .slide-from-right{
-    animation: slideFromRight 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    animation-name: slideFromRight;
 }
 
 .slide-from-left{
-    animation: slideFromLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    animation-name: slideFromLeft;
 }
 
 .slide-to-right{
     position: absolute;
     top: 0;
-    animation: slideToRight 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    animation-name: slideToRight;
 }
 
 .slide-to-left{
     position: absolute;
     top: 0;
-    animation: slideToLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    animation-name: slideToLeft;
 }
 
 
 $scaleFactory: 0.8;
-
-
 @keyframes slideFromRight {	
 	0%{
 		opacity: 0;
